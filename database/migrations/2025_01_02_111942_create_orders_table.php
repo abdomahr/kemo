@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('state');
             $table->string('phone');
             $table->string('email');
-            $table->foreignId( 'product_id')->constrained()->cascadeOnDelete();
+            $table->string('quantity');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

@@ -48,7 +48,7 @@
 					</ul>
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-						<li><a class="nav-link" href="cart"><img src="assets/images/cart.svg"></a></li>
+						<li class="nav-item active" ><a class="nav-link" href="cart">{{$cartCount}}<img src="assets/images/cart.svg"></a></li>
 					</ul>
 				</div>
 			</div>

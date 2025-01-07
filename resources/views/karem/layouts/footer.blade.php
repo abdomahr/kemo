@@ -2,7 +2,7 @@
 			<div class="container relative">
 
 				<div class="sofa-img">
-					<img src="assets/images/sofa.png" alt="Image" class="img-fluid">
+					<img src="/assets/images/sofa.png" alt="Image" class="img-fluid">
 				</div>
 
 			

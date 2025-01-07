@@ -31,8 +31,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::prefix('checkout')->group(function () {
-        Route::get('/', [checkoutController::class, 'index'])->name('checkout.index');
-        Route::get('/store', [checkoutController::class, 'store'])->name('checkout.store');
+        Route::get('/index/{id}', [checkoutController::class, 'index'])->name('checkout.index');
+        Route::post('/store', [checkoutController::class, 'store'])->name('checkout.store');
 
 
 
@@ -64,7 +64,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::get('/thankyou', function () {
-        return view('karem.thankyou');
+        $cartCount = Cart::where('user_id', auth()->id())->count();
+        return view('karem.thankyou', compact( 'cartCount'));
+        
     })->name('thankyou');
     
     

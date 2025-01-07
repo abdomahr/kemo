@@ -2,23 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Auth;
 
 class checkoutController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
+        $cartCount = Cart::where('user_id', auth()->id())->count();
 
+        $products = Product::where('id',$request->id)->get();
         
-        return view('karem.checkout');
+        return view('karem.checkout', compact('products','cartCount'));
     }
 
     /**
@@ -36,36 +39,35 @@ class checkoutController extends Controller
     {
 
 
-        // $validator = Validator::make($request->all(), [
-        //     'Country' => 'required|string',
-        //     'first_name' => 'required|string',
-        //     'last_name' => 'required|string',
-        //     'address' => 'required|string',
-        //     'state' => 'required|string',
-        //     'email' => 'required|email',
-        //     'phone' => 'required|numeric',
-        // ]);
+        $validator = Validator::make($request->all(), [
+            'Country' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'address' => 'required|string',
+            'state' => 'required|string',
+            'email' => 'required|email',
+            'phone' => 'required|numeric',
+            'quantity' => 'required|numeric',
+        ]);
 
      
-        // if ($validator->fails()) {
-        //     return redirect()->back()->withErrors($validator)->withInput();
-        // }
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
-        // // حفظ البيانات في جدول orders
-        // $order = new Order();
-        // $order->country = $request->Country;
-        // $order->first_name = $request->first_name;
-        // $order->last_name = $request->last_name;
-        // $order->address = $request->address;
-        // $order->state = $request->state;
-        // $order->email = $request->email;
-        // $order->phone = $request->phone;
-        // $order->product_id = 1;
-        // $order->user_id = 1;
-        // $order->save();
+        $order = new Order();
+        $order->country = $request->Country;
+        $order->first_name = $request->first_name;
+        $order->last_name = $request->last_name;
+        $order->address = $request->address;
+        $order->state = $request->state;
+        $order->email = $request->email;
+        $order->phone = $request->phone;
+        $order->quantity = $request->quantity;
+        $order->user_id = Auth::user()->id;
+        $order->save();
 
-        // // التوجيه إلى صفحة التأكيد بعد حفظ الطلب
-        // return redirect()->route('thankyou');
+        return redirect()->route('thankyou');
 
     }
 

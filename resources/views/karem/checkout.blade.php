@@ -17,10 +17,10 @@
   <meta name="keywords" content="bootstrap, bootstrap4" />
 
 		<!-- Bootstrap CSS -->
-		<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/assets/css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-		<link href="assets/css/tiny-slider.css" rel="stylesheet">
-		<link href="assets/css/style.css" rel="stylesheet">
+		<link href="/assets/css/tiny-slider.css" rel="stylesheet">
+		<link href="/assets/css/style.css" rel="stylesheet">
 		
 		<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
 	</head>
@@ -39,17 +39,17 @@
 
 				<div class="collapse navbar-collapse" id="navbarsFurni">
 					<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-						<li class="nav-item active">
-							<a class="nav-link" href="index">Home</a>
+						<li >
+							<a class="nav-link" href="/index">Home</a>
 						</li>
-						<li><a class="nav-link" href="shop">Shop</a></li>
-						<li><a class="nav-link" href="about">About us</a></li>
-						<li><a class="nav-link" href="contact">Contact us</a></li>
-						<li><a class="nav-link" href="{{ route('logout') }}">logout</a></li>
+						<li><a class="nav-link" href="/shop">Shop</a></li>
+						<li><a class="nav-link" href="/about">About us</a></li>
+						<li><a class="nav-link" href="/contact">Contact us</a></li>
+						<li><a class="nav-link" href="/{{ route('logout') }}">logout</a></li>
 					</ul>
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-						<li><a class="nav-link" href="cart"><img src="assets/images/cart.svg"></a></li>
+						<li class="nav-item active" ><a class="nav-link" href="cart">{{$cartCount}}<img src="/assets/images/cart.svg"></a></li>
 					</ul>
 				</div>
 			</div>
@@ -120,6 +120,11 @@
 									<input type="text" class="form-control @error('state') is-invalid @enderror" id="state" name="state" value="{{ old('state') }}">
 									@error('state') <span class="text-danger">{{ $message }}</span> @enderror
 								</div>
+								<div class="col-md-6">
+									<label for="quantity" class="text-black">quantity <span class="text-danger"></span></label>
+									<input type="number" class="form-control @error('quantity') is-invalid @enderror" id="quantity" name="quantity" placeholder="quantity" value="{{ old('quantity') }}">
+									@error('quantity') <span class="text-danger">{{ $message }}</span> @enderror
+								</div>
 							</div>
 			
 							<div class="form-group row mb-5">
@@ -134,6 +139,8 @@
 									@error('phone') <span class="text-danger">{{ $message }}</span> @enderror
 								</div>
 							</div>
+
+							</div>
 			
 							<div class="form-group">
 								<button type="submit" class="btn btn-black btn-lg py-3 btn-block">Place Order</button>
@@ -143,6 +150,28 @@
 				</div>
 			</form>
 
+					          <div class="row mb-5">
+		            <div class="col-md-12">
+		              <h2 class="h3 mb-3 text-black">Your Order</h2>
+		              <div class="p-3 p-lg-5 border bg-white">
+		                <table class="table site-block-order-table mb-5">
+		                  <thead>
+		                    <th>Product</th>
+		                    <th>Price</th>
+		                  </thead>
+						  @foreach($products as $product)
+		                  <tbody>
+		                    <tr>
+		                      <td>{{$product->name}} <strong class="mx-2"></strong> </td>
+		                      <td>${{$product->price}}</td>
+		                    </tr>
+
+		                  </tbody>
+						  @endforeach
+		                </table>
+
+
+			
 
 		          </div>
 		        </div>
